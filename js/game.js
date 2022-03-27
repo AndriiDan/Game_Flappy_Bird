@@ -39,7 +39,7 @@ pipe[0] = {
 // позиція пташки
 var xPos = 10;
 var yPos = 200;
-var grav = 1; // позиція пташки по осі у буде змінюватися на 1
+var grav = 1.5; // позиція пташки по осі у буде змінюватися на 1
 
 // малюю зображення в canvas
 function draw() {
@@ -60,6 +60,15 @@ function draw() {
                 x: canvas.width,
                 y: Math.floor(Math.random() * pipeUp.height) - pipeUp.height
             });
+        }
+
+        // перевірка зіткнення пташки та блока
+        if (xPos + bird.width >= pipe[i].x
+            && xPos <= pipe[i].x + pipeUp.width
+            && (yPos <= pipe[i].y + pipeUp.height
+                || yPos + bird.height >= pipe[i].y + pipeUp.height + gap)
+            || yPos + bird.height >= canvas.height - fg.height) {
+            location.reload(); // перезапустити гру заново
         }
     }
 
