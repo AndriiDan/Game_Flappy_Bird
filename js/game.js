@@ -18,15 +18,24 @@ fg.src = "img/fg.png";
 pipeUp.src = "img/pipeUp.png";
 pipeBottom.src = "img/pipeBottom.png";
 
+// створення змінних для звуків
+var fly = new Audio();
+var score_audio = new Audio();
+
+// завантаження звуків
+fly.src = "audio/fly.mp3";
+score_audio.src = "audio/score.mp3";
+
 // відстань по висоті між трубами
 var gap = 90; // 90px
 
 // при натисканні на будь-яку клавішу, буде викликатися ф-ція moveUp, яка підіймає пташку по осі у на 20 вверх
 document.addEventListener("keydown", moveUp);
 
-// підіймає пташку по осі у на 20 вверх
+// підіймає пташку по осі у на 30 вверх
 function moveUp() {
-    yPos -= 30;
+    yPos -= 30; // підіймає пташку
+    fly.play(); // відтворити звук
 }
 
 // створення труб (блоків)
@@ -77,6 +86,7 @@ function draw() {
         // зарахування балів після проходження блоків
         if (pipe[i].x == 5) {
             score++; // рахунок збільшується на 1
+            score_audio.play(); // відторити звук рахунку
         }
     }
 
