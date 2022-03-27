@@ -26,7 +26,14 @@ document.addEventListener("keydown", moveUp);
 
 // підіймає пташку по осі у на 20 вверх
 function moveUp() {
-    yPos -= 20;
+    yPos -= 30;
+}
+
+// створення труб (блоків)
+var pipe = [];
+pipe[0] = {
+    x: canvas.width, // по осі х першй блок буде знаходитися за межами екрану
+    y: 0
 }
 
 // позиція пташки
@@ -39,8 +46,22 @@ function draw() {
     // в canvas зображення bg(background) з координатами х:0, у:0
     context.drawImage(bg, 0, 0);
 
-    context.drawImage(pipeUp, 100, 0); // труба зверху
-    context.drawImage(pipeBottom, 100, 0 + pipeUp.height + gap); // розміщення відносно висоти pipeUp і змінної "gap" (відступ між блоками)
+    // труби будуть з'являтися в циклі 
+    for (var i = 0; i < pipe.length; i++) {
+        context.drawImage(pipeUp, pipe[i].x, pipe[i].y); // труба зверху
+        context.drawImage(pipeBottom, pipe[i].x, pipe[i].y + pipeUp.height + gap); // розміщення відносно висоти pipeUp і змінної "gap" (відступ між блоками)
+
+        // щоб блоки переміщувалися
+        pipe[i].x--;
+
+        // щоб створювалися нові блоки
+        if (pipe[i].x == 100) {
+            pipe.push({
+                x: canvas.width,
+                y: Math.floor(Math.random() * pipeUp.height) - pipeUp.height
+            });
+        }
+    }
 
     context.drawImage(fg, 0, canvas.height - fg.height); // по "у": опустити fg(forground) вниз
 
