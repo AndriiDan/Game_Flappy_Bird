@@ -36,9 +36,12 @@ pipe[0] = {
     y: 0
 }
 
+var score = 0; // рахунок
+
 // позиція пташки
 var xPos = 10;
 var yPos = 200;
+
 var grav = 1.5; // позиція пташки по осі у буде змінюватися на 1
 
 // малюю зображення в canvas
@@ -70,13 +73,25 @@ function draw() {
             || yPos + bird.height >= canvas.height - fg.height) {
             location.reload(); // перезапустити гру заново
         }
+
+        // зарахування балів після проходження блоків
+        if (pipe[i].x == 5) {
+            score++; // рахунок збільшується на 1
+        }
     }
 
     context.drawImage(fg, 0, canvas.height - fg.height); // по "у": опустити fg(forground) вниз
 
     context.drawImage(bird, xPos, yPos);
 
+    // позиція пташки під дією гравітації
     yPos += grav;
+
+    // відобразити результати рахунку
+    context.fillStule = "#000"; // колір
+    context.font = "24px Verdana"; // шрифт
+    context.fillText("Рахунок: " + score, 10, canvas.height - 20); // відобразити результати рахунку змінної score, по осі х 10px, по осі у "canvas.height - 20"
+
     // постійний виклик ф-ції (метода)
     requestAnimationFrame(draw);
 }
